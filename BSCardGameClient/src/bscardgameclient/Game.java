@@ -1,3 +1,5 @@
+package bscardgameclient;
+
 import java.awt.List;
 import java.util.ArrayList;
 
