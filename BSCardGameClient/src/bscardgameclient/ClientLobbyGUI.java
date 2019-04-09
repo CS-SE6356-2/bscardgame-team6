@@ -7,15 +7,25 @@ package bscardgameclient;
 
 /**
  *
- * @author shravanjambukesan
+ * @author Shravan Jambukesan
  */
 public class ClientLobbyGUI extends javax.swing.JFrame {
 
     /**
      * Creates new form ClientLobbyGUI
      */
-    public ClientLobbyGUI() {
+    String gameCode = "";
+    public ClientLobbyGUI(String gameCode) 
+    {
+        this.gameCode = gameCode;
         initComponents();
+        startGameNowButton.setVisible(false);
+        gameCodeLabel.setText("Game Code: " + gameCode);
+    }
+    
+    public void enableLobbyCreatorInterface()
+    {
+        startGameNowButton.setVisible(true);
     }
 
     /**
@@ -28,26 +38,45 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
     private void initComponents() {
 
         lobbyLabel = new javax.swing.JLabel();
+        gameCodeLabel = new javax.swing.JLabel();
+        startGameNowButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         lobbyLabel.setText("Game Lobby");
+
+        gameCodeLabel.setFont(new java.awt.Font("Lucida Grande", 0, 18)); // NOI18N
+        gameCodeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+
+        startGameNowButton.setText("Start Game Now");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(168, 168, 168)
-                .addComponent(lobbyLabel)
-                .addContainerGap(155, Short.MAX_VALUE))
+                .addContainerGap(93, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(lobbyLabel)
+                        .addGap(158, 158, 158))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(gameCodeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(81, 81, 81))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(startGameNowButton)
+                        .addGap(121, 121, 121))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lobbyLabel)
-                .addContainerGap(278, Short.MAX_VALUE))
+                .addGap(41, 41, 41)
+                .addComponent(gameCodeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                .addComponent(startGameNowButton)
+                .addGap(42, 42, 42))
         );
 
         pack();
@@ -55,6 +84,8 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel gameCodeLabel;
     private javax.swing.JLabel lobbyLabel;
+    private javax.swing.JButton startGameNowButton;
     // End of variables declaration//GEN-END:variables
 }

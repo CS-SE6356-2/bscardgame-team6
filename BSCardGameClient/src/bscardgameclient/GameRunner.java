@@ -10,12 +10,13 @@ import javax.swing.*;
 
 /**
  *
- * @author shravanjambukesan
+ * @author Shravan Jambukesan
  */
 public class GameRunner 
 {
     static ClientStartupGUI startupGUI = null;
     String gameCode = "";
+    boolean isLobbyCreator = false;
     public static void main(String args[]) 
     {
         /*
@@ -58,10 +59,15 @@ public class GameRunner
         });
     }
     
-    public GameRunner(String gameCode)
+    public GameRunner(String gameCode, boolean isLobbyCreator)
     {
         this.gameCode = gameCode;
+        this.isLobbyCreator = isLobbyCreator;
         checkForInternetConnection();
+        if(isLobbyCreator)
+        {
+            registerLobby(gameCode);
+        }
     }
     
     public void checkForInternetConnection()
@@ -86,12 +92,20 @@ public class GameRunner
     
     public void launchLobbyGUI()
     {
-        ClientLobbyGUI lobby = new ClientLobbyGUI();
+        ClientLobbyGUI lobby = new ClientLobbyGUI(gameCode);
+        if(isLobbyCreator)
+        {
+            lobby.enableLobbyCreatorInterface();
+        }
         startupGUI.setVisible(false);
         lobby.setVisible(true);
         lobby.toFront();
         lobby.repaint();
-        
+    }
+    
+    public void registerLobby(String gameCode)
+    {
+        // Connect to game server and register this lobby with the provided game code
     }
     
     
