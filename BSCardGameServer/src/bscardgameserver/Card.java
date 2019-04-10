@@ -6,6 +6,7 @@ public class Card {
 	public enum cardSuit {SPADES, CLUBS, DIAMONDS, HEARTS}
 	faceValue facevalue;
 	cardSuit cardsuit;
+	int Num;
 	
 	public Card(int num) {
 		facevalue = faceValue.values()[num % 13];
@@ -18,6 +19,8 @@ public class Card {
 		    cardsuit = cardSuit.DIAMONDS;
 		else 
 		    cardsuit = cardSuit.HEARTS;
+		
+		Num = num;
 	}
 	
 	public faceValue getFaceValue() {
