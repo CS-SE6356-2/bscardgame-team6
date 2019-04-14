@@ -40,8 +40,9 @@ public class Game
         
         Server server = new Server();
         Kryo kryo = server.getKryo(); 
-        kryo.register(PigeonDispenser.class); 
-        kryo.register(HomingPigeon.class);
+	kryo.register(BSServerCommunication.class);
+//kryo.register(PigeonDispenser.class); 
+        //kryo.register(HomingPigeon.class);
         
         server.start();
         server.bind(54555, 54777);
@@ -50,14 +51,13 @@ public class Game
         server.addListener(new Listener() {
            @Override
            public void received (Connection connection, Object object) {
-              if (object instanceof PigeonDispenser) {
-                 PigeonDispenser request = (PigeonDispenser)object;
-                 System.out.println(request.text);
+              if (object instanceof BSServerCommunication) {
+                 BSServerCommunication request = (BSServerCommunication)object;
+                 System.out.println(request.text1);
 
-                 HomingPigeon response = new HomingPigeon();
-                 response.text = "Thanks";
-                 connection.sendTCP(response);
-                                  connection.sendUDP(response);
+                 //BSServerCommunication response = new BSServerCommunication();
+                 request.text2 = "Thanks";
+                 connection.sendTCP(request);
               }
            }
         });
