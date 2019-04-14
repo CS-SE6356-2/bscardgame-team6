@@ -5,6 +5,9 @@
  */
 package bscardgameclient;
 
+import com.esotericsoftware.kryonet.*;
+import com.esotericsoftware.kryo.*;
+import java.io.IOException;
 import java.net.*;
 import javax.swing.*;
 
@@ -17,46 +20,71 @@ public class GameRunner
     static ClientStartupGUI startupGUI = null;
     String gameCode = "";
     boolean isLobbyCreator = false;
-    public static void main(String args[]) 
+    public static void main(String args[]) throws IOException 
     {
-        /*
-            Setup cross-platform look and feel so the GUI renders with OS specific style
-        */
-        try 
-        {
+            /*
+            try
+            {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-        } 
-        catch (ClassNotFoundException ex)
-        {
-            java.util.logging.Logger.getLogger(ClientStartupGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-        catch (InstantiationException ex)
-        {
-            java.util.logging.Logger.getLogger(ClientStartupGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        catch (IllegalAccessException ex)
-        {
-            java.util.logging.Logger.getLogger(ClientStartupGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } 
-        catch (javax.swing.UnsupportedLookAndFeelException ex)
-        {
-            java.util.logging.Logger.getLogger(ClientStartupGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        /* Create and display the dialog */
-        java.awt.EventQueue.invokeLater(new Runnable() 
-        {
-            public void run() {
-                startupGUI = new ClientStartupGUI(new javax.swing.JFrame(), true);
-                startupGUI.addWindowListener(new java.awt.event.WindowAdapter() {
-                    @Override
-                    public void windowClosing(java.awt.event.WindowEvent e) {
-                        System.exit(0);
-                    }
-                });
-                startupGUI.setVisible(true);
             }
+            catch (ClassNotFoundException ex)
+            {
+            java.util.logging.Logger.getLogger(ClientStartupGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+            catch (InstantiationException ex)
+            {
+            java.util.logging.Logger.getLogger(ClientStartupGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+            catch (IllegalAccessException ex)
+            {
+            java.util.logging.Logger.getLogger(ClientStartupGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+            catch (javax.swing.UnsupportedLookAndFeelException ex)
+            {
+            java.util.logging.Logger.getLogger(ClientStartupGUI.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            }
+            
+            java.awt.EventQueue.invokeLater(new Runnable()
+            {
+            public void run() {
+            startupGUI = new ClientStartupGUI(new javax.swing.JFrame(), true);
+            startupGUI.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent e) {
+            System.exit(0);
+            }
+            });
+            startupGUI.setVisible(true);
+            }
+            });
+            */
+            Client client = new Client();
+            Kryo kryo = client.getKryo();
+            kryo.register(PigeonDispenser.class);
+            kryo.register(HomingPigeon.class);
+            
+
+            client.start();
+            client.connect(5000, "192.168.43.223", 54555, 54777);
+
+            PigeonDispenser request = new PigeonDispenser();
+            request.text = "Here is the request";
+            client.sendTCP(request);
+            client.sendUDP(request);
+           client.addListener(new Listener() 
+           {
+
+           public void received (Connection connection, Object object) {
+              if (object instanceof HomingPigeon) 
+              {
+                 System.out.println("Listener created");
+                 HomingPigeon response = (HomingPigeon)object;
+                 System.out.println(response.text);
+              }
+           }
         });
+            
+
     }
     
     public GameRunner(String gameCode, boolean isLobbyCreator)
