@@ -1,5 +1,6 @@
 package bscardgameserver;
 
+import com.esotericsoftware.kryonet.*;
 import java.io.*;
 import java.util.*;
 
@@ -18,7 +19,7 @@ public class Game
     public static String Lobby;
 	
     //*/
-    public static void main(String[] args) 
+    public static void main(String[] args) throws IOException 
     {
 	/*
 	given inputs from the client, different methods are called
@@ -33,6 +34,9 @@ public class Game
 	
 	
 	*/
+        Server server = new Server();
+        server.start();
+        server.bind(54555, 54777);
 	System.out.println("Technically both compilable and executable");
     }
     
