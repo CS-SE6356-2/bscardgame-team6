@@ -60,27 +60,26 @@ public class GameRunner
             
             Client client = new Client();
             Kryo kryo = client.getKryo();
-            kryo.register(PigeonDispenser.class);
-            kryo.register(HomingPigeon.class);
-            
+            //kryo.register(PigeonDispenser.class);
+            //kryo.register(HomingPigeon.class);
+            kryo.register(BSServerCommunication.class);
 
             new Thread(client).start();
-            client.connect(5000, "10.21.61.71", 54555, 54777);
+            client.connect(5000, "97.99.238.31", 54555, 54777);
 
-            PigeonDispenser request = new PigeonDispenser();
-            request.text = "Hola!";
+            BSServerCommunication request = new BSServerCommunication();
+            request.text1 = "Hola!";
             client.sendTCP(request);
             client.addListener(new Listener() 
-           {
+            {
 
            public void received (Connection connection, Object object) {
-              if (object instanceof HomingPigeon) 
+              if (object instanceof BSServerCommunication) 
               {
-                 System.out.println("Listener created");
-                 HomingPigeon response = (HomingPigeon)object;
-                 System.out.println(response.text);
+                 BSServerCommunication response = (BSServerCommunication)object;
+                 System.out.println(response.text2);
               }
-           }
+            }
         });
             
 
