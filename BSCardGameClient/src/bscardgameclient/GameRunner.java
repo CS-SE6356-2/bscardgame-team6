@@ -22,7 +22,7 @@ public class GameRunner
     boolean isLobbyCreator = false;
     public static void main(String args[]) throws IOException 
     {
-            /*
+            
             try
             {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -57,7 +57,7 @@ public class GameRunner
             startupGUI.setVisible(true);
             }
             });
-            */
+            
             Client client = new Client();
             Kryo kryo = client.getKryo();
             kryo.register(PigeonDispenser.class);
@@ -65,9 +65,10 @@ public class GameRunner
             
 
             new Thread(client).start();
-            client.connect(5000, "127.0.0.1", 54555, 54777);
+            client.connect(5000, "10.21.61.71", 54555, 54777);
 
             PigeonDispenser request = new PigeonDispenser();
+            request.text = "Hola!";
             client.sendTCP(request);
             client.addListener(new Listener() 
            {
