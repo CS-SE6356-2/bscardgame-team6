@@ -64,14 +64,12 @@ public class GameRunner
             kryo.register(HomingPigeon.class);
             
 
-            client.start();
-            client.connect(5000, "192.168.43.223", 54555, 54777);
+            new Thread(client).start();
+            client.connect(5000, "127.0.0.1", 54555, 54777);
 
             PigeonDispenser request = new PigeonDispenser();
-            request.text = "Here is the request";
             client.sendTCP(request);
-            client.sendUDP(request);
-           client.addListener(new Listener() 
+            client.addListener(new Listener() 
            {
 
            public void received (Connection connection, Object object) {

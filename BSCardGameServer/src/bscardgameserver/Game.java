@@ -48,6 +48,7 @@ public class Game
         
         
         server.addListener(new Listener() {
+           @Override
            public void received (Connection connection, Object object) {
               if (object instanceof PigeonDispenser) {
                  PigeonDispenser request = (PigeonDispenser)object;
@@ -56,7 +57,7 @@ public class Game
                  HomingPigeon response = new HomingPigeon();
                  response.text = "Thanks";
                  connection.sendTCP(response);
-                 connection.sendUDP(response);
+                                  connection.sendUDP(response);
               }
            }
         });
