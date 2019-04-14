@@ -12,8 +12,4 @@ package bscardgameserver;
 public class PigeonDispenser 
 {
     public String text;
-    PigeonDispenser(String str)
-    {
-        text = str;
-    }
 }

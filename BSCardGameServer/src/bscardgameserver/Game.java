@@ -35,28 +35,31 @@ public class Game
 	
 	
 	*/
+        
+        
+        
         Server server = new Server();
-        server.start();
-        server.bind(54555, 54777);
-        
-        HomingPigeon test = new HomingPigeon("test text");
-        
         Kryo kryo = server.getKryo(); 
         kryo.register(PigeonDispenser.class); 
         kryo.register(HomingPigeon.class);
         
-        server.addListener(new Listener() { 
-            public void received (Connection connection, Object object) { 
-                if (object instanceof PigeonDispenser) { 
-                   PigeonDispenser request = (PigeonDispenser)object; 
-                   System.out.println(request.text); 
+        server.start();
+        server.bind(54555, 54777);
+        
+        
+        server.addListener(new Listener() {
+           public void received (Connection connection, Object object) {
+              if (object instanceof PigeonDispenser) {
+                 PigeonDispenser request = (PigeonDispenser)object;
+                 System.out.println(request.text);
 
-                   HomingPigeon response = new HomingPigeon("test"); 
-                   System.out.println(response.text); 
-                        connection.sendTCP(response); 
-                } 
-               } 
-            });
+                 HomingPigeon response = new HomingPigeon();
+                 response.text = "Thanks";
+                 connection.sendTCP(response);
+                 connection.sendUDP(response);
+              }
+           }
+        });
         
 	//System.out.println("Technically both compilable and executable");
     }

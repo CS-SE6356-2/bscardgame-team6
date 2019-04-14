@@ -12,8 +12,4 @@ package bscardgameserver;
 public class HomingPigeon 
 {
     public String text;
-    HomingPigeon(String str)
-    {
-        text = str;
-    }
 }
