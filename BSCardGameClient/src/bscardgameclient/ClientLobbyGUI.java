@@ -26,6 +26,7 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
     public void enableLobbyCreatorInterface()
     {
         startGameNowButton.setVisible(true);
+        waitingLabel.setVisible(false);
     }
 
     /**
@@ -40,6 +41,7 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
         lobbyLabel = new javax.swing.JLabel();
         gameCodeLabel = new javax.swing.JLabel();
         startGameNowButton = new javax.swing.JButton();
+        waitingLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,6 +51,14 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
         gameCodeLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
 
         startGameNowButton.setText("Start Game Now");
+        startGameNowButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                startGameNowButtonActionPerformed(evt);
+            }
+        });
+
+        waitingLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        waitingLabel.setText("Waiting on host to start game...");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -64,8 +74,10 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
                         .addComponent(gameCodeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(81, 81, 81))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(startGameNowButton)
-                        .addGap(121, 121, 121))))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(startGameNowButton, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(waitingLabel))
+                        .addGap(95, 95, 95))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -74,18 +86,31 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
                 .addComponent(lobbyLabel)
                 .addGap(41, 41, 41)
                 .addComponent(gameCodeLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 116, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
+                .addComponent(waitingLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                 .addComponent(startGameNowButton)
-                .addGap(42, 42, 42))
+                .addGap(44, 44, 44))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void startGameNowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startGameNowButtonActionPerformed
+        // TODO add your handling code here:
+        ClientInGameGUI inGame = new ClientInGameGUI(this, true);
+        this.setVisible(false);
+        inGame.setVisible(true);
+        inGame.toFront();
+        inGame.repaint();
+        
+    }//GEN-LAST:event_startGameNowButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel gameCodeLabel;
     private javax.swing.JLabel lobbyLabel;
     private javax.swing.JButton startGameNowButton;
+    private javax.swing.JLabel waitingLabel;
     // End of variables declaration//GEN-END:variables
 }
