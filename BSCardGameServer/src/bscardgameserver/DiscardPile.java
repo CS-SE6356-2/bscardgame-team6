@@ -8,7 +8,7 @@ public class DiscardPile
 	ArrayList<Integer> pile;
 	ArrayList<Integer> topCard;
 	
-	DiscardPile()
+	public DiscardPile()
 	{
 	    pile = new ArrayList<>();
 	    topCard = new ArrayList<>();
