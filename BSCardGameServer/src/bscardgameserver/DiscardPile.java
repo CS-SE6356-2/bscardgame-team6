@@ -3,14 +3,21 @@ package bscardgameserver;
 import java.util.List;
 import java.util.ArrayList;
 
-public class DiscardPile {
+public class DiscardPile 
+{
+	ArrayList<Integer> pile;
+	ArrayList<Integer> topCard;
 	
-	ArrayList pile = new ArrayList<Card>();
-	Card topCard;
-	
-	public void addCard(Card c) {
-		pile.add(c);
-		topCard = c;
+	DiscardPile()
+	{
+	    pile = new ArrayList<>();
+	    topCard = new ArrayList<>();
+	}
+	public void addCards(ArrayList cards) 
+	{
+		pile.addAll(cards);
+		topCard.clear();
+		topCard.addAll(cards);
 	}
 	
 	public int size() {
@@ -18,7 +25,7 @@ public class DiscardPile {
 	}
 	
 	public List empty() {
-		List<Card> copy;
+		List<Integer> copy;
                 copy = new ArrayList<>(pile);
                 pile.clear();
 		topCard = null;
