@@ -25,3 +25,4 @@ hs_err_pid*
 /BSCardGameClient/build/
 /BSCardGameServer/nbproject/private/
 /BSCardGameServer/build/
+/BSCardGameServer/dist/

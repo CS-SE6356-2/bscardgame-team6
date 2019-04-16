@@ -3,19 +3,22 @@ package bscardgameserver;
 import java.util.ArrayList;
 
 public class BSServerCommunication {
-    String lobby;
+    Integer lobby;
     int numPlayers;
     String confirmR = "Recieved"; //reciept confirmation
     
     int currentTurn;
     int previousTurn;
     ArrayList[] PlayerHands;
+    boolean emptyPile;
     
     int actor;//player number
     int action;//what they did: 0 is play a card, 1 is challenge, 2 is win
     ArrayList<Integer> cardsPlayed;
     
-    BSServerCommunication(String lobbycode)
+    
+    
+    BSServerCommunication(Integer lobbycode)
     {
 	lobby = lobbycode;
 	PlayerHands = new ArrayList[6];
