@@ -3,10 +3,12 @@ package bscardgameserver;
 import com.esotericsoftware.kryo.Kryo;
 import com.esotericsoftware.kryonet.Connection;
 import com.esotericsoftware.kryonet.Listener;
+import com.esotericsoftware.kryonet.Listener.ThreadedListener;
 import com.esotericsoftware.kryonet.Server;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.logging.Level;
@@ -14,6 +16,7 @@ import java.util.logging.Logger;
 
 public class Lobby extends Game
 {
+    ArrayList<Connection> connections;
     Queue<Integer> Players;
     DiscardPile pile;
     int Turn;
@@ -21,32 +24,40 @@ public class Lobby extends Game
     int CurrentCard;
     ArrayList<Integer> lastCard;
     int numPlayers;
-    String Lobby;
+    Integer Lobby;
     Integer Winners[];
     boolean emptyPile;
+    int port;
     
     BSServerCommunication comms;
     Server server = new Server();
     Kryo kryo = server.getKryo(); 
 
-    public Lobby(String code) 
+    public Lobby(Integer code) 
     {
 	Lobby = code;
 	Players = new LinkedList<>();
 	pile = new DiscardPile();
 	emptyPile = true;
+        connections = new ArrayList<>();
+        port = 54000 + code;
 	
 	kryo.register(BSServerCommunication.class);
 	comms = new BSServerCommunication(Lobby);
 	new Thread(server).start();
 	try {
-	    server.bind(54500, 54500);
+	    server.bind(port, port);
 	} catch (IOException ex) {
 	    Logger.getLogger(Lobby.class.getName()).log(Level.SEVERE, null, ex);
 	}
 	
-	server.addListener(new Listener() 
+	server.addListener(new ThreadedListener(new Listener() 
 	{
+            @Override
+            public void connected (Connection connection) 
+            {
+                connections.add(connection);
+            }
 	    @Override
 	    public void received (Connection connection, Object object) 
 	    {
@@ -59,7 +70,7 @@ public class Lobby extends Game
 		connection.sendTCP(comms);
 	      }
 	    }
-	});
+	}));
     }
 
     public void Challenged()
@@ -112,12 +123,16 @@ public class Lobby extends Game
 	LastTurn = comms.currentTurn;
 	comms.currentTurn = Players.poll();
 	Players.add(Turn);
-	//update the comm file and push it to clients
+        PushComms();
 	
     }
     
     public void PushComms()
     {
-	//connection.sendTCP(comms);
+	Iterator clients = connections.iterator();
+        while(clients.hasNext())
+        {
+            ((Connection)clients.next()).sendTCP(comms);
+        }
     }
 }
