@@ -35,42 +35,44 @@
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="previousButton" min="-2" pref="52" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Component id="card1Button" min="-2" pref="79" max="-2" attributes="0"/>
-                                  <Component id="card5Button" min="-2" pref="79" max="-2" attributes="0"/>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="card2Button" min="-2" pref="79" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="card3Button" min="-2" pref="79" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="card4Button" min="-2" pref="79" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="card6Button" min="-2" pref="79" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="card7Button" min="-2" pref="79" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="card8Button" min="-2" pref="79" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="122" max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="260" max="-2" attributes="0"/>
                               <Component id="lastPlayLabel" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="105" max="-2" attributes="0"/>
+                              <EmptySpace pref="18" max="32767" attributes="0"/>
                               <Component id="cardToPlayLabel" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Group type="103" groupAlignment="1" attributes="0">
+                                  <Component id="card1Button" min="-2" pref="98" max="-2" attributes="0"/>
+                                  <Component id="card5Button" min="-2" pref="98" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="card2Button" alignment="0" min="-2" pref="98" max="-2" attributes="0"/>
+                                  <Component id="card6Button" alignment="0" min="-2" pref="98" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="separate" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Component id="card7Button" min="-2" pref="98" max="-2" attributes="0"/>
+                                  <Component id="card3Button" min="-2" pref="98" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
-                      <EmptySpace type="separate" pref="35" max="32767" attributes="0"/>
-                      <Component id="nextButton" min="-2" pref="52" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" attributes="0">
+                              <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                              <Component id="card8Button" min="-2" pref="98" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="130" max="-2" attributes="0"/>
+                              <Component id="nextButton" min="-2" pref="52" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="0" attributes="0">
+                              <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
+                              <Component id="card4Button" min="-2" pref="98" max="-2" attributes="0"/>
+                          </Group>
+                      </Group>
                   </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
@@ -79,47 +81,40 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="lastPlayLabel" min="-2" pref="33" max="-2" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
-              <Component id="cardToPlayLabel" min="-2" max="-2" attributes="0"/>
-              <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="119" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="previousButton" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
-                          <Component id="nextButton" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="card2Button" alignment="3" min="-2" pref="125" max="-2" attributes="0"/>
-                          <Component id="card1Button" alignment="3" min="-2" pref="125" max="-2" attributes="0"/>
-                          <Component id="card3Button" alignment="3" min="-2" pref="125" max="-2" attributes="0"/>
-                          <Component id="card4Button" alignment="3" min="-2" pref="125" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="card5Button" alignment="3" min="-2" pref="125" max="-2" attributes="0"/>
-                          <Component id="card6Button" alignment="3" min="-2" pref="125" max="-2" attributes="0"/>
-                          <Component id="card7Button" alignment="3" min="-2" pref="125" max="-2" attributes="0"/>
-                          <Component id="card8Button" alignment="3" min="-2" pref="125" max="-2" attributes="0"/>
-                      </Group>
-                  </Group>
-              </Group>
-              <EmptySpace pref="29" max="32767" attributes="0"/>
-              <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="callBSButton" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-                  <Component id="playCardButton" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
-              </Group>
-              <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-          </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
               <Component id="connectionLabel" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
+          </Group>
+          <Group type="102" alignment="0" attributes="0">
+              <EmptySpace max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="lastPlayLabel" alignment="3" min="-2" pref="33" max="-2" attributes="0"/>
+                  <Component id="cardToPlayLabel" alignment="3" min="-2" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="card1Button" min="-2" pref="152" max="-2" attributes="0"/>
+                  <Component id="card2Button" min="-2" pref="153" max="-2" attributes="0"/>
+                  <Component id="card3Button" min="-2" pref="153" max="-2" attributes="0"/>
+                  <Component id="card4Button" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Component id="card6Button" min="-2" pref="153" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" max="-2" attributes="0">
+                      <Component id="previousButton" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
+                      <Component id="nextButton" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
+                      <Component id="card7Button" alignment="0" pref="153" max="32767" attributes="0"/>
+                  </Group>
+                  <Component id="card5Button" min="-2" pref="153" max="-2" attributes="0"/>
+                  <Component id="card8Button" min="-2" pref="153" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace pref="153" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="3" attributes="0">
+                  <Component id="callBSButton" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+                  <Component id="playCardButton" alignment="3" min="-2" pref="36" max="-2" attributes="0"/>
+              </Group>
           </Group>
       </Group>
     </DimensionLayout>
@@ -150,7 +145,7 @@
     </Component>
     <Component class="javax.swing.JLabel" name="lastPlayLabel">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Last Play"/>
+        <Property name="text" type="java.lang.String" value="Last Play: "/>
       </Properties>
     </Component>
     <Component class="javax.swing.JLabel" name="connectionLabel">
@@ -164,43 +159,29 @@
       </Properties>
     </Component>
     <Component class="javax.swing.JToggleButton" name="card2Button">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jToggleButton1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JToggleButton" name="card1Button">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jToggleButton1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JToggleButton" name="card3Button">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jToggleButton1"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/bscardgameclient/Resources/2D.png"/>
+        </Property>
       </Properties>
     </Component>
     <Component class="javax.swing.JToggleButton" name="card5Button">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jToggleButton1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JToggleButton" name="card6Button">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jToggleButton1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JToggleButton" name="card7Button">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jToggleButton1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JToggleButton" name="card8Button">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="jToggleButton1"/>
-      </Properties>
     </Component>
     <Component class="javax.swing.JToggleButton" name="card4Button">
       <Properties>
-        <Property name="text" type="java.lang.String" value="jToggleButton1"/>
+        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+          <Image iconType="3" name="/bscardgameclient/Resources/10D.png"/>
+        </Property>
       </Properties>
     </Component>
   </SubComponents>
