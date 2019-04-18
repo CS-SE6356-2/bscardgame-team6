@@ -26,24 +26,28 @@ public class Lobby extends Game
     int numPlayers;
     Integer Lobby;
     Integer Winners[];
-    boolean emptyPile;
+    int winners;
     int port;
+    boolean startcheck;
     
     BSServerCommunication comms;
     Server server = new Server();
     Kryo kryo = server.getKryo(); 
 
-    public Lobby(Integer code) 
+    public Lobby(BSServerCommunication lobbyCreated) 
     {
-	Lobby = code;
+	comms = lobbyCreated;
+	Lobby = comms.lobby;
 	Players = new LinkedList<>();
 	pile = new DiscardPile();
-	emptyPile = true;
+	comms.emptyPile = true;
+	startcheck = false;
+	winners =0;
         connections = new ArrayList<>();
-        port = 54000 + code;
+        port = 54000 + Lobby;
 	
 	kryo.register(BSServerCommunication.class);
-	comms = new BSServerCommunication(Lobby);
+	//comms = new BSServerCommunication(Lobby);
 	new Thread(server).start();
 	try {
 	    server.bind(port, port);
@@ -57,6 +61,8 @@ public class Lobby extends Game
             public void connected (Connection connection) 
             {
                 connections.add(connection);
+		comms.numPlayers = connections.size();
+		PushComms();
             }
 	    @Override
 	    public void received (Connection connection, Object object) 
@@ -65,9 +71,29 @@ public class Lobby extends Game
 		{
 		BSServerCommunication request = (BSServerCommunication)object;
 		System.out.println(request.confirmR);
+		if (!startcheck && comms.started)
+		{
+		    startcheck = true;
+		    StartGame();
+		}
+		switch(comms.action)
+		{
+		    //switch cases for playing a card, challenging, and winning
+		    case 0: //card(s) played
+			pile.addCards(comms.cardsPlayed);
+			break;
+		    case 1: //challenged
+			Challenged();
+			break;
+		    case 2: //winner claimed; decide for serverside or client side checking
+			Winners[winners] = comms.actor;
+			break;
+		    default:	//error message
+			System.out.println("Inproper action recieved by client");
+		}
 		 
-		 
-		connection.sendTCP(comms);
+		//connection.sendTCP(comms);
+		PushComms();
 	      }
 	    }
 	}));
@@ -80,20 +106,22 @@ public class Lobby extends Game
 	    comms.PlayerHands[comms.actor].addAll(challengeDeck);
 	else
 	    comms.PlayerHands[LastTurn].addAll(challengeDeck);
+	comms.emptyPile = true;
     }
 
-    public void StartGame(int NumPlayers)
+    public void StartGame()
     {
-	for(int count = 1; count <= NumPlayers; count++)
+	numPlayers = comms.numPlayers;
+	for(int count = 1; count <= numPlayers; count++)
 	{
 	    Players.add(count);
 	}
-	numPlayers = NumPlayers;
 	comms.currentTurn = 1;
 	CurrentCard = 0;
 	Winners = new Integer[numPlayers - 2];
 	distributeCards();
 	//NextPlayer();
+	PushComms();
     }
     
     public void distributeCards()
@@ -124,7 +152,6 @@ public class Lobby extends Game
 	comms.currentTurn = Players.poll();
 	Players.add(Turn);
         PushComms();
-	
     }
     
     public void PushComms()
