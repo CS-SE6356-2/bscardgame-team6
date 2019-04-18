@@ -103,9 +103,9 @@ public class Lobby extends Game
     {
 	ArrayList challengeDeck = (ArrayList)pile.empty();
 	if (pile.topCard == lastCard) //challenger wrong if condition is met
-	    comms.PlayerHands[comms.actor].addAll(challengeDeck);
+	    comms.PlayerHands.get(comms.actor).addAll(challengeDeck);
 	else
-	    comms.PlayerHands[LastTurn].addAll(challengeDeck);
+	    comms.PlayerHands.get(comms.actor).addAll(challengeDeck);
 	comms.emptyPile = true;
     }
 
@@ -139,7 +139,7 @@ public class Lobby extends Game
 	{
 	    for(int j = 0; j < each; j++)
 	    {
-		comms.PlayerHands[i].add(deck.remove(0));
+		comms.PlayerHands.get(comms.actor).add(deck.remove(0));
 	    }
 	}
 	//the remaining cards seed the discard pile

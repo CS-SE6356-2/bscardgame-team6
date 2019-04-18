@@ -10,7 +10,7 @@ public class BSServerCommunication {
     
     int currentTurn;
     int previousTurn;
-    ArrayList[] PlayerHands;
+    ArrayList<ArrayList<Integer>>  PlayerHands;
     boolean emptyPile;
     
     int actor;//player number
@@ -21,7 +21,7 @@ public class BSServerCommunication {
     
     BSServerCommunication()
     {
-	PlayerHands = new ArrayList[6];
+	PlayerHands = new ArrayList<ArrayList<Integer>>(6);
 	cardsPlayed = new ArrayList<>();
 	started = false;
     }
