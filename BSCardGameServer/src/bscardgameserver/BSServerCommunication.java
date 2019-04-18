@@ -5,6 +5,7 @@ import java.util.ArrayList;
 public class BSServerCommunication {
     Integer lobby;
     int numPlayers;
+    boolean started;
     String confirmR = "Recieved"; //reciept confirmation
     
     int currentTurn;
@@ -23,5 +24,6 @@ public class BSServerCommunication {
 	lobby = lobbycode;
 	PlayerHands = new ArrayList[6];
 	cardsPlayed = new ArrayList<>();
+	started = false;
     }
 }
