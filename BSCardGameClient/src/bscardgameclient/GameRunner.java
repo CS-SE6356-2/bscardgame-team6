@@ -93,6 +93,7 @@ public class GameRunner
             client = new Client();
             Kryo kryo = client.getKryo();
             kryo.register(BSServerCommunication.class);
+            kryo.register(java.util.ArrayList.class);
             new Thread(client).start();
         }
         catch(Exception e)
@@ -108,7 +109,7 @@ public class GameRunner
             // Connect to game server and register this lobby with the provided game code
             client.connect(5000, "127.0.0.1", 54777, 54777);
 
-            BSServerCommunication comm = new BSServerCommunication(Integer.parseInt(gameCode));
+            BSServerCommunication comm = new BSServerCommunication();
             
             //client.sendTCP(gameCode);
             client.addListener(new Listener() 

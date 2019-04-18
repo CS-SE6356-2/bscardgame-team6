@@ -16,6 +16,7 @@ public class Game
         Server server = new Server();
         Kryo kryo = server.getKryo(); 
 	kryo.register(BSServerCommunication.class);
+        kryo.register(java.util.ArrayList.class);
         new Thread(server).start();
         server.bind(54777, 54777); //54500-54599 are reserved for lobbies
         
