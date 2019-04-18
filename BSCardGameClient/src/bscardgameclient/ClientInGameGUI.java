@@ -6,8 +6,16 @@
 package bscardgameclient;
 
 import java.awt.Color;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.UIManager;
 import javax.swing.plaf.ColorUIResource;
+import javax.swing.JToggleButton;
 
 /**
  *
@@ -18,11 +26,48 @@ public class ClientInGameGUI extends javax.swing.JDialog {
     /**
      * Creates new form ex2
      */
-    public ClientInGameGUI(java.awt.Frame parent, boolean modal) {
+    String gameCode = "";
+    public ClientInGameGUI(java.awt.Frame parent, boolean modal) 
+    {
         super(parent, modal);
         initComponents();
         setResizable(false);
-
+        setupCards();
+    }
+        
+    public void setupCards()
+    {
+        ArrayList<JToggleButton> buttons = new ArrayList<>();
+        int x = 0;
+        buttons.add(card1Button);
+        buttons.add(card2Button);
+        buttons.add(card3Button);
+        buttons.add(card4Button);
+        buttons.add(card5Button);
+        buttons.add(card6Button);
+        buttons.add(card7Button);
+        buttons.add(card8Button);
+        try 
+        {
+            
+            for(JToggleButton button : buttons)
+            {
+                String fileName = "Resources/" + x + ".png";
+                InputStream stream = getClass().getResourceAsStream(fileName);
+                ImageIcon cardImage = new ImageIcon(ImageIO.read(stream));
+                button.setIcon(cardImage);
+                x++;
+            }
+        } 
+        catch (IOException ex) 
+        {
+            Logger.getLogger(ClientInGameGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public void setGameCode(String gameCode)
+    {
+        this.gameCode = gameCode;
     }
 
     /**
@@ -53,10 +98,25 @@ public class ClientInGameGUI extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         playCardButton.setText("Play");
+        playCardButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                playCardButtonActionPerformed(evt);
+            }
+        });
 
         callBSButton.setText("Call BS");
+        callBSButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                callBSButtonActionPerformed(evt);
+            }
+        });
 
         previousButton.setText("Prev");
+        previousButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                previousButtonActionPerformed(evt);
+            }
+        });
 
         nextButton.setText("Next");
         nextButton.addActionListener(new java.awt.event.ActionListener() {
@@ -70,10 +130,6 @@ public class ClientInGameGUI extends javax.swing.JDialog {
         connectionLabel.setText("Connected as...");
 
         cardToPlayLabel.setText("Card to play is: ");
-
-        card3Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bscardgameclient/Resources/2D.png"))); // NOI18N
-
-        card4Button.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bscardgameclient/Resources/10D.png"))); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -141,12 +197,12 @@ public class ClientInGameGUI extends javax.swing.JDialog {
                 .addGap(17, 17, 17)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(card6Button, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(previousButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(card7Button, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE))
+                        .addComponent(nextButton, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(card5Button, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(card8Button, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(card8Button, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(card7Button, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 153, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(callBSButton, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,6 +215,18 @@ public class ClientInGameGUI extends javax.swing.JDialog {
     private void nextButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nextButtonActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_nextButtonActionPerformed
+
+    private void previousButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_previousButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_previousButtonActionPerformed
+
+    private void playCardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playCardButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_playCardButtonActionPerformed
+
+    private void callBSButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_callBSButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_callBSButtonActionPerformed
 
     /**
      * @param args the command line arguments

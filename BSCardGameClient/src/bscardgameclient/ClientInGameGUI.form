@@ -99,16 +99,16 @@
                   <Component id="card3Button" min="-2" pref="153" max="-2" attributes="0"/>
                   <Component id="card4Button" alignment="0" min="-2" pref="153" max="-2" attributes="0"/>
               </Group>
-              <EmptySpace min="-2" pref="17" max="-2" attributes="0"/>
+              <EmptySpace min="17" pref="17" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="card6Button" min="-2" pref="153" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" max="-2" attributes="0">
+                  <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="previousButton" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
                       <Component id="nextButton" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
-                      <Component id="card7Button" alignment="0" pref="153" max="32767" attributes="0"/>
                   </Group>
                   <Component id="card5Button" min="-2" pref="153" max="-2" attributes="0"/>
                   <Component id="card8Button" min="-2" pref="153" max="-2" attributes="0"/>
+                  <Component id="card7Button" alignment="1" min="-2" pref="153" max="-2" attributes="0"/>
               </Group>
               <EmptySpace pref="153" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
@@ -124,16 +124,25 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Play"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="playCardButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="callBSButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Call BS"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="callBSButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="previousButton">
       <Properties>
         <Property name="text" type="java.lang.String" value="Prev"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="previousButtonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JButton" name="nextButton">
       <Properties>
@@ -163,11 +172,6 @@
     <Component class="javax.swing.JToggleButton" name="card1Button">
     </Component>
     <Component class="javax.swing.JToggleButton" name="card3Button">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/bscardgameclient/Resources/2D.png"/>
-        </Property>
-      </Properties>
     </Component>
     <Component class="javax.swing.JToggleButton" name="card5Button">
     </Component>
@@ -178,11 +182,6 @@
     <Component class="javax.swing.JToggleButton" name="card8Button">
     </Component>
     <Component class="javax.swing.JToggleButton" name="card4Button">
-      <Properties>
-        <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/bscardgameclient/Resources/10D.png"/>
-        </Property>
-      </Properties>
     </Component>
   </SubComponents>
 </Form>

@@ -99,6 +99,7 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
     private void startGameNowButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_startGameNowButtonActionPerformed
         // TODO add your handling code here:
         ClientInGameGUI inGame = new ClientInGameGUI(this, true);
+        inGame.setGameCode(gameCode);
         this.setVisible(false);
         inGame.setVisible(true);
         inGame.toFront();

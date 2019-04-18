@@ -18,6 +18,7 @@ import javax.swing.*;
 public class GameRunner 
 {
     static ClientStartupGUI startupGUI = null;
+    final int BASE_PORT = 5400;
     String gameCode = "";
     boolean isLobbyCreator = false;
     public static void main(String args[]) throws IOException 
@@ -57,32 +58,6 @@ public class GameRunner
             startupGUI.setVisible(true);
             }
             });
-            
-            Client client = new Client();
-            Kryo kryo = client.getKryo();
-            //kryo.register(PigeonDispenser.class);
-            //kryo.register(HomingPigeon.class);
-            kryo.register(BSServerCommunication.class);
-
-            new Thread(client).start();
-            client.connect(5000, "97.99.238.31", 54555, 54777);
-
-            BSServerCommunication request = new BSServerCommunication();
-            request.text1 = "Hola!";
-            client.sendTCP(request);
-            client.addListener(new Listener() 
-            {
-
-           public void received (Connection connection, Object object) {
-              if (object instanceof BSServerCommunication) 
-              {
-                 BSServerCommunication response = (BSServerCommunication)object;
-                 System.out.println(response.text2);
-              }
-            }
-        });
-            
-
     }
     
     public GameRunner(String gameCode, boolean isLobbyCreator)
@@ -103,9 +78,9 @@ public class GameRunner
         */
         try
         {
-            URL checkConnectionURL = new URL("https://shravanj.com");
-            URLConnection connection = checkConnectionURL.openConnection();
-            connection.connect();
+            //URL checkConnectionURL = new URL("http://97.99.238.31:54555");
+            //URLConnection connection = checkConnectionURL.openConnection();
+            //connection.connect();
             System.out.println("Internet connection successful!");
             // If successful, launch the lobby GUI
             launchLobbyGUI();
@@ -131,7 +106,38 @@ public class GameRunner
     
     public void registerLobby(String gameCode)
     {
-        // Connect to game server and register this lobby with the provided game code
+        int port = BASE_PORT + Integer.parseInt(gameCode);
+        /*
+        try
+        {
+            // Connect to game server and register this lobby with the provided game code
+            Client client = new Client();
+            Kryo kryo = client.getKryo();
+            kryo.register(BSServerCommunication.class);
+
+            new Thread(client).start();
+            client.connect(5000, "97.99.238.31", 54555, 54777);
+
+            BSServerCommunication comm = new BSServerCommunication(Integer.parseInt(lobbyCode));
+            
+            client.sendTCP(request);
+            client.addListener(new Listener() 
+            {
+
+           public void received (Connection connection, Object object) {
+              if (object instanceof BSServerCommunication) 
+              {
+                 BSServerCommunication response = (BSServerCommunication)object;
+                 System.out.println(response.text2);
+              }
+            }
+        });
+        }
+        catch(Exception e)
+        {
+            JOptionPane.showMessageDialog(null, "Unable connect to game server, please check your internet connection and try again.", "Server Connection Failed", JOptionPane.ERROR_MESSAGE);
+        }
+        */
     }
     
     
