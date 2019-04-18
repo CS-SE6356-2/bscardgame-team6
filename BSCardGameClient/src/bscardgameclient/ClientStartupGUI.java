@@ -23,6 +23,19 @@ public class ClientStartupGUI extends javax.swing.JDialog {
         setResizable(false);
         initComponents();
     }
+    
+    public static boolean isNumeric(String s) 
+    {
+        try 
+        {
+            int i = Integer.parseInt(s);
+        } 
+        catch (NumberFormatException | NullPointerException ex) 
+        {
+            return false;
+        }
+        return true;
+    }
 
 
     @SuppressWarnings("unchecked")
@@ -101,9 +114,9 @@ public class ClientStartupGUI extends javax.swing.JDialog {
     private void createLobbyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createLobbyButtonActionPerformed
         gameCode = gameCodeEntry.getText();
        // Check if the game code entered meets out requirements
-       if(gameCode.isEmpty() || gameCode.length() < 5 || gameCode.contains(" "))
+       if(gameCode.isEmpty() || gameCode.length() < 5 || gameCode.contains(" ") || !isNumeric(gameCode))
        {
-           JOptionPane.showMessageDialog(null, "Please enter a valid Game Code. A valid Game Code is 5 alphanumerical characters long and contains no spaces.", "Invalid Game Code", JOptionPane.ERROR_MESSAGE);
+           JOptionPane.showMessageDialog(null, "Please enter a valid Game Code. A valid Game Code is 5 digits (numerical characters) with no spaces.", "Invalid Game Code", JOptionPane.ERROR_MESSAGE);
        }
        else
        {
@@ -117,7 +130,7 @@ public class ClientStartupGUI extends javax.swing.JDialog {
     private void joinGameButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinGameButton1ActionPerformed
         gameCode = gameCodeEntry.getText();
        // Check if the game code entered meets out requirements
-       if(gameCode.isEmpty() || gameCode.length() < 5 || gameCode.contains(" "))
+       if(gameCode.isEmpty() || gameCode.length() < 5 || gameCode.contains(" ") || !isNumeric(gameCode))
        {
            JOptionPane.showMessageDialog(null, "Please enter a valid Game Code", "Invalid Game Code", JOptionPane.ERROR_MESSAGE);
        }

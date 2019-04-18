@@ -27,6 +27,7 @@ public class ClientInGameGUI extends javax.swing.JDialog {
      * Creates new form ex2
      */
     String gameCode = "";
+    ArrayList<JToggleButton> buttons = new ArrayList<>();
     public ClientInGameGUI(java.awt.Frame parent, boolean modal) 
     {
         super(parent, modal);
@@ -37,7 +38,7 @@ public class ClientInGameGUI extends javax.swing.JDialog {
         
     public void setupCards()
     {
-        ArrayList<JToggleButton> buttons = new ArrayList<>();
+        
         int x = 0;
         buttons.add(card1Button);
         buttons.add(card2Button);
@@ -222,6 +223,10 @@ public class ClientInGameGUI extends javax.swing.JDialog {
 
     private void playCardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_playCardButtonActionPerformed
         // TODO add your handling code here:
+        for(JToggleButton button : buttons)
+        {
+            //if(button.)
+        }
     }//GEN-LAST:event_playCardButtonActionPerformed
 
     private void callBSButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_callBSButtonActionPerformed

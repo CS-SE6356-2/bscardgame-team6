@@ -21,6 +21,7 @@ public class GameRunner
     final int BASE_PORT = 5400;
     String gameCode = "";
     boolean isLobbyCreator = false;
+    Client client;
     public static void main(String args[]) throws IOException 
     {
             
@@ -64,39 +65,20 @@ public class GameRunner
     {
         this.gameCode = gameCode;
         this.isLobbyCreator = isLobbyCreator;
-        checkForInternetConnection();
+        initializeCommClient();
+        launchLobbyGUI();
         if(isLobbyCreator)
         {
             registerLobby(gameCode);
         }
-    }
-    
-    public void checkForInternetConnection()
-    {
-        /*
-            Verfify that our game server is reachable over the internet
-        */
-        try
-        {
-            //URL checkConnectionURL = new URL("http://97.99.238.31:54555");
-            //URLConnection connection = checkConnectionURL.openConnection();
-            //connection.connect();
-            System.out.println("Internet connection successful!");
-            // If successful, launch the lobby GUI
-            launchLobbyGUI();
-        }
-        catch(Exception e)
-        {
-            JOptionPane.showMessageDialog(null, "Unable connect to game server, please check your internet connection and try again.", "Server Connection Failed", JOptionPane.ERROR_MESSAGE);
-        }
-    }
-    
+    }    
     public void launchLobbyGUI()
     {
         ClientLobbyGUI lobby = new ClientLobbyGUI(gameCode);
         if(isLobbyCreator)
         {
             lobby.enableLobbyCreatorInterface();
+            registerLobby(gameCode);
         }
         startupGUI.setVisible(false);
         lobby.setVisible(true);
@@ -104,40 +86,50 @@ public class GameRunner
         lobby.repaint();
     }
     
-    public void registerLobby(String gameCode)
+    public void initializeCommClient()
     {
-        int port = BASE_PORT + Integer.parseInt(gameCode);
-        /*
+        try
+        {
+            client = new Client();
+            Kryo kryo = client.getKryo();
+            kryo.register(BSServerCommunication.class);
+            new Thread(client).start();
+        }
+        catch(Exception e)
+        {
+            System.out.println("Unable to initialize communication client");
+        }
+    }
+    
+    public void registerLobby(String gameCode)
+    {        
         try
         {
             // Connect to game server and register this lobby with the provided game code
-            Client client = new Client();
-            Kryo kryo = client.getKryo();
-            kryo.register(BSServerCommunication.class);
+            client.connect(5000, "127.0.0.1", 54777, 54777);
 
-            new Thread(client).start();
-            client.connect(5000, "97.99.238.31", 54555, 54777);
-
-            BSServerCommunication comm = new BSServerCommunication(Integer.parseInt(lobbyCode));
+            BSServerCommunication comm = new BSServerCommunication(Integer.parseInt(gameCode));
             
-            client.sendTCP(request);
+            //client.sendTCP(gameCode);
             client.addListener(new Listener() 
             {
 
-           public void received (Connection connection, Object object) {
-              if (object instanceof BSServerCommunication) 
-              {
-                 BSServerCommunication response = (BSServerCommunication)object;
-                 System.out.println(response.text2);
-              }
+            public void received (Connection connection, Object object) 
+            {
+               if (object instanceof BSServerCommunication) 
+               {
+                  BSServerCommunication response = (BSServerCommunication)object;
+                  System.out.println(response.lobby);
+               }
             }
         });
         }
         catch(Exception e)
         {
+            System.out.println(e.toString());
             JOptionPane.showMessageDialog(null, "Unable connect to game server, please check your internet connection and try again.", "Server Connection Failed", JOptionPane.ERROR_MESSAGE);
         }
-        */
+        
     }
     
     
