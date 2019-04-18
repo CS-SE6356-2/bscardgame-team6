@@ -19,9 +19,8 @@ public class BSServerCommunication {
     
     
     
-    BSServerCommunication(Integer lobbycode)
+    BSServerCommunication()
     {
-	lobby = lobbycode;
 	PlayerHands = new ArrayList[6];
 	cardsPlayed = new ArrayList<>();
 	started = false;

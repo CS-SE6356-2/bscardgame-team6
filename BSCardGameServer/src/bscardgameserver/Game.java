@@ -23,10 +23,11 @@ public class Game
 	    @Override
             public void connected (Connection connection) 
             {
-                BSServerCommunication lobbyCreated = new BSServerCommunication(portcounter);
+                BSServerCommunication lobbyCreated = new BSServerCommunication();
+                lobbyCreated.lobby=portcounter;
                 lobbies.add(new Lobby(lobbyCreated));
                 connection.sendTCP(lobbyCreated);
-		portcounter++;
+                portcounter++;
             }
 	    @Override
 	    public void received (Connection connection, Object object) {
