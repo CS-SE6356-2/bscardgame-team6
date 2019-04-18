@@ -9,6 +9,7 @@ import java.util.*;
 public class Game 
 {
     public static int portcounter = 500;
+    public static ArrayList<Lobby> lobbies = new ArrayList<>();
     public static void main(String[] args) throws IOException 
     {
         
@@ -19,30 +20,23 @@ public class Game
         server.bind(54777, 54777); //54500-54599 are reserved for lobbies
         
         server.addListener(new ThreadedListener(new Listener() {
-           @Override
+	    @Override
             public void connected (Connection connection) 
             {
-                BSServerCommunication newlobby = new BSServerCommunication(portcounter);
-                portcounter++;
-                connection.sendTCP(newlobby);
+                BSServerCommunication lobbyCreated = new BSServerCommunication(portcounter);
+                lobbies.add(new Lobby(lobbyCreated));
+                connection.sendTCP(lobbyCreated);
+		portcounter++;
             }
-           @Override
-           public void received (Connection connection, Object object) {
+	    @Override
+	    public void received (Connection connection, Object object) {
               if (object instanceof BSServerCommunication) {
                  BSServerCommunication request = (BSServerCommunication)object;
                  System.out.println("Lobby created");
 
                  connection.sendTCP(request);
               }
-           }
+	    }
         }));
-        
-	//System.out.println("Technically both compilable and executable");
-    }
-
-    public static String JoinLobby(String code)
-    {
-	
-	return "reserved for networking phase";
     }
 }
