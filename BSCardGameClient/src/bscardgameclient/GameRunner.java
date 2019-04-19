@@ -73,6 +73,7 @@ public class GameRunner
 	if(isLobbyCreator)
         {
 	    registerLobby();
+	    //this.gameCode= comm.lobby.toString();
         }
 	else
 	{
@@ -81,7 +82,6 @@ public class GameRunner
 	    registerLobby(gameCode);
 	}
         launchLobbyGUI();
-
     }    
     public void launchLobbyGUI()
     {
@@ -137,7 +137,8 @@ public class GameRunner
             {
 		if (object instanceof BSServerCommunication) 
 		{
-		     if(comm.started)
+		     comm = (BSServerCommunication)object;
+		    if(comm.started)
 		     {
 			 System.out.println("This game lobby has already started");
 		     }
