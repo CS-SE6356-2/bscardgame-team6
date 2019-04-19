@@ -112,11 +112,12 @@ public class ClientStartupGUI extends javax.swing.JDialog {
         Submit button click event handler
     */
     private void createLobbyButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_createLobbyButtonActionPerformed
-        gameCode = gameCodeEntry.getText();
+       /* 
+	gameCode = gameCodeEntry.getText();
        // Check if the game code entered meets out requirements
-       if(gameCode.isEmpty() || gameCode.length() < 4 || gameCode.contains(" ") || !isNumeric(gameCode))
+       if(gameCode.isEmpty() || gameCode.length() != 3 || gameCode.contains(" ") || !isNumeric(gameCode) || Integer.parseInt(gameCode) < 500 || Integer.parseInt(gameCode) > 599)
        {
-           JOptionPane.showMessageDialog(null, "Please enter a valid Game Code. A valid Game Code is 4 digits (numerical characters) with no spaces.", "Invalid Game Code", JOptionPane.ERROR_MESSAGE);
+           JOptionPane.showMessageDialog(null, "Please enter a valid Game Code. A valid Game Code is 3 digits (numerical characters) with no spaces.", "Invalid Game Code", JOptionPane.ERROR_MESSAGE);
        }
        else
        {
@@ -124,13 +125,14 @@ public class ClientStartupGUI extends javax.swing.JDialog {
            // Start the game runner
            GameRunner runner = new GameRunner(gameCode, true);
        }
-       
+	*/
+       GameRunner runner = new GameRunner("-1", true);
     }//GEN-LAST:event_createLobbyButtonActionPerformed
 
     private void joinGameButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_joinGameButton1ActionPerformed
         gameCode = gameCodeEntry.getText();
        // Check if the game code entered meets out requirements
-       if(gameCode.isEmpty() || gameCode.length() < 4 || gameCode.contains(" ") || !isNumeric(gameCode))
+       if(gameCode.isEmpty() || gameCode.length() != 3 || gameCode.contains(" ") || !isNumeric(gameCode) || Integer.parseInt(gameCode) < 500 || Integer.parseInt(gameCode) > 599)
        {
            JOptionPane.showMessageDialog(null, "Please enter a valid Game Code", "Invalid Game Code", JOptionPane.ERROR_MESSAGE);
        }
