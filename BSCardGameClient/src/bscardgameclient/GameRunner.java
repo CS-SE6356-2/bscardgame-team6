@@ -80,6 +80,10 @@ public class GameRunner
             lobby.enableLobbyCreatorInterface();
             registerLobby(gameCode);
         }
+        else
+        {
+            lobby.connectToServer();
+        }
         startupGUI.setVisible(false);
         lobby.setVisible(true);
         lobby.toFront();
@@ -120,7 +124,7 @@ public class GameRunner
                if (object instanceof BSServerCommunication) 
                {
                   BSServerCommunication response = (BSServerCommunication)object;
-                  System.out.println(response.lobby);
+                  System.out.println("Connected to: " + response.lobby);
                }
             }
         });

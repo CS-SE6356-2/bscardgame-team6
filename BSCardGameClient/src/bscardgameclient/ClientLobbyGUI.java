@@ -5,6 +5,9 @@
  */
 package bscardgameclient;
 
+import com.esotericsoftware.kryonet.*;
+import com.esotericsoftware.kryo.*;
+
 /**
  *
  * @author Shravan Jambukesan
@@ -15,12 +18,55 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
      * Creates new form ClientLobbyGUI
      */
     String gameCode = "";
+    Client client;
     public ClientLobbyGUI(String gameCode) 
     {
         this.gameCode = gameCode;
         initComponents();
         startGameNowButton.setVisible(false);
         gameCodeLabel.setText("Game Code: " + gameCode);
+    }
+    
+    public void connectToServer()
+    {
+        int port = 54000 + Integer.parseInt(gameCode);
+        try
+        {
+            client.connect(5000, "127.0.0.1", port, port);
+            client.addListener(new Listener() 
+            {
+
+                public void received (Connection connection, Object object) 
+                {
+                   if (object instanceof BSServerCommunication) 
+                   {
+                      BSServerCommunication response = (BSServerCommunication)object;
+                      System.out.println("Player has connected to: " + response.confirmR);
+                   }
+                }
+            });
+            
+        }
+        catch(Exception e)
+        {
+            System.out.println("Exception in connectToServer(): " + e);
+        }
+    }
+    
+        public void initializeCommClient()
+    {
+        try
+        {
+            client = new Client();
+            Kryo kryo = client.getKryo();
+            kryo.register(BSServerCommunication.class);
+            kryo.register(java.util.ArrayList.class);
+            new Thread(client).start();
+        }
+        catch(Exception e)
+        {
+            System.out.println("Unable to initialize communication client");
+        }
     }
     
     public void enableLobbyCreatorInterface()
