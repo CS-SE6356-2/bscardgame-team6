@@ -21,11 +21,11 @@ public class GameRunner
     static ClientStartupGUI startupGUI = null;
     final String SERVER_IP = "127.0.0.1";
     final int BASE_PORT = 54000;
-    String gameCode = "";
+    String gameCode = "default";
     boolean isLobbyCreator = false;
     Client client;
     int lobbyPort;
-    BSServerCommunication comm;
+    static volatile BSServerCommunication comm;
     
     public static void main(String args[]) throws IOException 
     {
@@ -81,17 +81,19 @@ public class GameRunner
 	    lobbyPort = BASE_PORT + Integer.parseInt(gameCode);
 	    registerLobby(gameCode);
 	}
+System.out.println(lobbyPort);
+	System.out.println(this.gameCode);
         launchLobbyGUI();
     }    
     public void launchLobbyGUI()
     {
         ClientLobbyGUI lobby = new ClientLobbyGUI(gameCode);
+	lobby.setLobbyPort(lobbyPort);
         if(isLobbyCreator)
         {
             lobby.enableLobbyCreatorInterface();
             //registerLobby(gameCode);
             //System.out.println("Lobby Port: " + lobbyPort);
-            //lobby.setLobbyPort(lobbyPort);
         }
         else
         {
@@ -148,10 +150,10 @@ public class GameRunner
 		       lobbyPort = comm.lobby;
 		     }
 		}
-		//connection.close();
+		connection.close();
             }
         }));
-	//client.removeListener(tempListener);
+	client.removeListener(tempListener);
         }
         catch(Exception e)
         {
@@ -179,14 +181,14 @@ public class GameRunner
             {
 		public void received (Connection connection, Object object) 
 		{
-		   if (object instanceof BSServerCommunication) 
-		   {
+		    if (object instanceof BSServerCommunication) 
+		    {
 			comm = (BSServerCommunication)object;
 			gameCode = comm.lobby.toString();
 			lobbyPort = BASE_PORT + Integer.parseInt(gameCode);
 			System.out.println("Connecting to lobby: " + gameCode);
-		   }
-		   connection.close();
+		    }
+		    connection.close();
 		}
 	    }));
 	    client.removeListener(tempListener);

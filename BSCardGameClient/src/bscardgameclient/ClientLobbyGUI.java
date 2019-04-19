@@ -18,6 +18,7 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
      * Creates new form ClientLobbyGUI
      */
     String gameCode = "";
+    final String SERVER_IP = "127.0.0.1";
     Client client;
     int port;
     public ClientLobbyGUI(String gameCode) 
@@ -38,7 +39,8 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
         initializeCommClient();
         try
         {
-            client.connect(5000, "127.0.0.1", 54501, 54501);
+	    System.out.println(port);
+            client.connect(5000, SERVER_IP, port, port);
             client.addListener(new Listener() 
             {
 

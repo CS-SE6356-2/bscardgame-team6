@@ -28,6 +28,7 @@ public class Game
                 lobbyCreated.lobby=portcounter;
                 lobbies.add(new Lobby(lobbyCreated));
                 connection.sendTCP(lobbyCreated);
+		System.out.println(portcounter);
                 portcounter++;
             }
 	    @Override
