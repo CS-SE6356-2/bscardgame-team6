@@ -19,6 +19,7 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
      */
     String gameCode = "";
     Client client;
+    int port;
     public ClientLobbyGUI(String gameCode) 
     {
         this.gameCode = gameCode;
@@ -27,12 +28,17 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
         gameCodeLabel.setText("Game Code: " + gameCode);
     }
     
+    public void setLobbyPort(int port)
+    {
+        this.port = port;
+    }
+    
     public void connectToServer()
     {
-        int port = 54000 + Integer.parseInt(gameCode);
+        initializeCommClient();
         try
         {
-            client.connect(5000, "127.0.0.1", port, port);
+            client.connect(5000, "127.0.0.1", 54501, 54501);
             client.addListener(new Listener() 
             {
 
@@ -41,7 +47,7 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
                    if (object instanceof BSServerCommunication) 
                    {
                       BSServerCommunication response = (BSServerCommunication)object;
-                      System.out.println("Player has connected to: " + response.confirmR);
+                      System.out.println("Player has connected to: " + response.lobby);
                    }
                 }
             });
@@ -53,7 +59,7 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
         }
     }
     
-        public void initializeCommClient()
+    public void initializeCommClient()
     {
         try
         {
@@ -146,6 +152,7 @@ public class ClientLobbyGUI extends javax.swing.JFrame {
         // TODO add your handling code here:
         ClientInGameGUI inGame = new ClientInGameGUI(this, true);
         inGame.setGameCode(gameCode);
+        inGame.setLobbyPort(54501);
         this.setVisible(false);
         inGame.setVisible(true);
         inGame.toFront();

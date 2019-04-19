@@ -47,6 +47,7 @@ public class Lobby extends Game
         port = 54000 + Lobby;
 	
 	kryo.register(BSServerCommunication.class);
+        kryo.register(java.util.ArrayList.class);
 	//comms = new BSServerCommunication(Lobby);
 	new Thread(server).start();
 	try {

@@ -22,6 +22,7 @@ public class GameRunner
     String gameCode = "";
     boolean isLobbyCreator = false;
     Client client;
+    int lobbyPort;
     public static void main(String args[]) throws IOException 
     {
             
@@ -79,6 +80,8 @@ public class GameRunner
         {
             lobby.enableLobbyCreatorInterface();
             registerLobby(gameCode);
+            //System.out.println("Lobby Port: " + lobbyPort);
+            //lobby.setLobbyPort(lobbyPort);
         }
         else
         {
@@ -89,7 +92,7 @@ public class GameRunner
         lobby.toFront();
         lobby.repaint();
     }
-    
+   
     public void initializeCommClient()
     {
         try
@@ -125,6 +128,7 @@ public class GameRunner
                {
                   BSServerCommunication response = (BSServerCommunication)object;
                   System.out.println("Connected to: " + response.lobby);
+                  lobbyPort = response.lobby;
                }
             }
         });
@@ -133,6 +137,10 @@ public class GameRunner
         {
             System.out.println(e.toString());
             JOptionPane.showMessageDialog(null, "Unable connect to game server, please check your internet connection and try again.", "Server Connection Failed", JOptionPane.ERROR_MESSAGE);
+        }
+        finally
+        {
+            
         }
         
     }

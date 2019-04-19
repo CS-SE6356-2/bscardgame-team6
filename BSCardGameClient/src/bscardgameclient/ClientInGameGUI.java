@@ -5,6 +5,8 @@
  */
 package bscardgameclient;
 
+import com.esotericsoftware.kryo.Kryo;
+import com.esotericsoftware.kryonet.Client;
 import java.awt.Color;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +29,8 @@ public class ClientInGameGUI extends javax.swing.JDialog {
      * Creates new form ex2
      */
     String gameCode = "";
+    int lobbyPort;
+    Client client;
     ArrayList<JToggleButton> buttons = new ArrayList<>();
     public ClientInGameGUI(java.awt.Frame parent, boolean modal) 
     {
@@ -34,6 +38,27 @@ public class ClientInGameGUI extends javax.swing.JDialog {
         initComponents();
         setResizable(false);
         setupCards();
+    }
+    
+    public void initializeCommClient()
+    {
+        try
+        {
+            client = new Client();
+            Kryo kryo = client.getKryo();
+            kryo.register(BSServerCommunication.class);
+            kryo.register(java.util.ArrayList.class);
+            new Thread(client).start();
+        }
+        catch(Exception e)
+        {
+            System.out.println("Unable to initialize communication client");
+        }
+    }
+    
+    public void setLobbyPort(int lobbyPort)
+    {
+        this.lobbyPort = lobbyPort;
     }
         
     public void setupCards()
