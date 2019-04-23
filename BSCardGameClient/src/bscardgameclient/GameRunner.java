@@ -10,6 +10,8 @@ import com.esotericsoftware.kryo.*;
 import com.esotericsoftware.kryonet.Listener.ThreadedListener;
 import java.io.IOException;
 import java.net.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -25,7 +27,7 @@ public class GameRunner
     boolean isLobbyCreator = false;
     Client client;
     int lobbyPort;
-    static volatile BSServerCommunication comm;
+    public static volatile BSServerCommunication comm;
     
     public static void main(String args[]) throws IOException 
     {
@@ -68,7 +70,8 @@ public class GameRunner
     
     public GameRunner(String gameCode, boolean isLobbyCreator)
     {
-	this.isLobbyCreator = isLobbyCreator;
+	comm = new BSServerCommunication();
+        this.isLobbyCreator = isLobbyCreator;
 	initializeCommClient();
 	if(isLobbyCreator)
         {
@@ -81,7 +84,8 @@ public class GameRunner
 	    lobbyPort = BASE_PORT + Integer.parseInt(gameCode);
 	    registerLobby(gameCode);
 	}
-System.out.println(lobbyPort);
+
+System.out.println(comm.lobby);
 	System.out.println(this.gameCode);
         launchLobbyGUI();
     }    
@@ -113,7 +117,7 @@ System.out.println(lobbyPort);
             Kryo kryo = client.getKryo();
             kryo.register(BSServerCommunication.class);
             kryo.register(java.util.ArrayList.class);
-            new Thread(client).start();
+            client.start();
         }
         catch(Exception e)
         {
@@ -132,14 +136,14 @@ System.out.println(lobbyPort);
             
             //client.sendTCP(gameCode);
 	    Listener tempListener;
-            client.addListener(tempListener = new ThreadedListener(new Listener() 
+            client.addListener(tempListener = new Listener() 
             {
 
             public void received (Connection connection, Object object) 
             {
 		if (object instanceof BSServerCommunication) 
 		{
-		     comm = (BSServerCommunication)object;
+		    GameRunner.comm = (BSServerCommunication)object;
 		    if(comm.started)
 		     {
 			 System.out.println("This game lobby has already started");
@@ -149,11 +153,10 @@ System.out.println(lobbyPort);
 		       System.out.println("Connecting to lobby: " + comm.lobby);
 		       lobbyPort = comm.lobby;
 		     }
+                    client.notify();
 		}
-		connection.close();
             }
-        }));
-	client.removeListener(tempListener);
+        });
         }
         catch(Exception e)
         {
@@ -177,7 +180,7 @@ System.out.println(lobbyPort);
             
             //client.sendTCP(gameCode);
 	    Listener tempListener;
-            client.addListener(tempListener = new ThreadedListener(new Listener() 
+            client.addListener(new Listener() 
             {
 		public void received (Connection connection, Object object) 
 		{
@@ -188,10 +191,12 @@ System.out.println(lobbyPort);
 			lobbyPort = BASE_PORT + Integer.parseInt(gameCode);
 			System.out.println("Connecting to lobby: " + gameCode);
 		    }
-		    connection.close();
+                    client.notify();
+		    //connection.close();
 		}
-	    }));
-	    client.removeListener(tempListener);
+	    });
+            client.wait();
+	    //client.removeListener(tempListener);
         }
         catch(Exception e)
         {
