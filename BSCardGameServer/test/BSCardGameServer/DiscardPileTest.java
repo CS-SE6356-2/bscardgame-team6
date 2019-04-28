@@ -54,6 +54,7 @@ public class DiscardPileTest {
 		assertEquals(0, pile.size());
 	}
     
+        @Test
     	public void sizeTest()
 	{
 		DiscardPile pile = new DiscardPile();
