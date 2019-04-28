@@ -7,9 +7,10 @@ package bscardgameclient;
 
 import com.esotericsoftware.kryonet.*;
 import com.esotericsoftware.kryo.*;
-import com.esotericsoftware.kryonet.Listener.ThreadedListener;
 import java.io.IOException;
 import java.net.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.*;
 
 /**
@@ -25,7 +26,7 @@ public class GameRunner
     boolean isLobbyCreator = false;
     Client client;
     int lobbyPort;
-    static volatile BSServerCommunication comm;
+    public static volatile BSServerCommunication comm;
     
     public static void main(String args[]) throws IOException 
     {
@@ -68,7 +69,8 @@ public class GameRunner
     
     public GameRunner(String gameCode, boolean isLobbyCreator)
     {
-	this.isLobbyCreator = isLobbyCreator;
+	comm = new BSServerCommunication();
+        this.isLobbyCreator = isLobbyCreator;
 	initializeCommClient();
 	if(isLobbyCreator)
         {
@@ -81,8 +83,7 @@ public class GameRunner
 	    lobbyPort = BASE_PORT + Integer.parseInt(gameCode);
 	    registerLobby(gameCode);
 	}
-System.out.println(lobbyPort);
-	System.out.println(this.gameCode);
+        //System.out.println(lobbyPort);
         launchLobbyGUI();
     }    
     public void launchLobbyGUI()
@@ -95,14 +96,12 @@ System.out.println(lobbyPort);
             //registerLobby(gameCode);
             //System.out.println("Lobby Port: " + lobbyPort);
         }
-        else
-        {
-            lobby.connectToServer();
-        }
+        lobby.connectToServer();
         startupGUI.setVisible(false);
         lobby.setVisible(true);
         lobby.toFront();
         lobby.repaint();
+        client.stop();
     }
    
     public void initializeCommClient()
@@ -113,7 +112,7 @@ System.out.println(lobbyPort);
             Kryo kryo = client.getKryo();
             kryo.register(BSServerCommunication.class);
             kryo.register(java.util.ArrayList.class);
-            new Thread(client).start();
+            client.start();
         }
         catch(Exception e)
         {
@@ -122,7 +121,8 @@ System.out.println(lobbyPort);
     }
     
     public void registerLobby(String gameCode)
-    {        
+    {      
+        synchronized(client) {
         try
         {
             // Connect to game server lobby with the provided game code
@@ -132,42 +132,51 @@ System.out.println(lobbyPort);
             
             //client.sendTCP(gameCode);
 	    Listener tempListener;
-            client.addListener(tempListener = new ThreadedListener(new Listener() 
+            client.addListener(tempListener = new Listener() 
             {
-
+            @Override
             public void received (Connection connection, Object object) 
             {
+                synchronized(client) {
 		if (object instanceof BSServerCommunication) 
 		{
-		     comm = (BSServerCommunication)object;
+		    comm = (BSServerCommunication)object;
 		    if(comm.started)
 		     {
 			 System.out.println("This game lobby has already started");
+                         JOptionPane.showMessageDialog(null, "This game lobby has already started, please try another code or create a new lobby", "Unable to join lobby", JOptionPane.ERROR_MESSAGE);
 		     }
 		     else
 		     {
 		       System.out.println("Connecting to lobby: " + comm.lobby);
-		       lobbyPort = comm.lobby;
+		       //lobbyPort = comm.lobby;
 		     }
+                    client.notify();
+                    connection.close();
 		}
-		connection.close();
+                }
             }
-        }));
-	client.removeListener(tempListener);
+        });
+        client.wait();
+        client.removeListener(tempListener);
+        } catch (IOException ex) {
+            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "Unable connect to game server, please check your internet connection and try again.", "Server Connection Failed", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(GameRunner.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(GameRunner.class.getName()).log(Level.SEVERE, null, ex);
         }
         catch(Exception e)
         {
             System.out.println(e.toString());
             JOptionPane.showMessageDialog(null, "Unable connect to game server, please check your internet connection and try again.", "Server Connection Failed", JOptionPane.ERROR_MESSAGE);
         }
-        finally
-        {
-            
         }
     }
     
     public void registerLobby()
-    {        
+    {     
+        synchronized(client) {
         try
         {
             // Connect to game server and register a new lobby
@@ -177,10 +186,12 @@ System.out.println(lobbyPort);
             
             //client.sendTCP(gameCode);
 	    Listener tempListener;
-            client.addListener(tempListener = new ThreadedListener(new Listener() 
+            client.addListener(tempListener = new Listener() 
             {
+                @Override
 		public void received (Connection connection, Object object) 
 		{
+                    synchronized(client) {
 		    if (object instanceof BSServerCommunication) 
 		    {
 			comm = (BSServerCommunication)object;
@@ -188,19 +199,26 @@ System.out.println(lobbyPort);
 			lobbyPort = BASE_PORT + Integer.parseInt(gameCode);
 			System.out.println("Connecting to lobby: " + gameCode);
 		    }
+                    client.notify();
 		    connection.close();
+                    }
 		}
-	    }));
+	    });
+            client.wait();
 	    client.removeListener(tempListener);
+            
+        } catch (IOException ex) {
+            System.out.println(ex.toString());
+            JOptionPane.showMessageDialog(null, "Unable connect to game server, please check your internet connection and try again.", "Server Connection Failed", JOptionPane.ERROR_MESSAGE);
+            Logger.getLogger(GameRunner.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(GameRunner.class.getName()).log(Level.SEVERE, null, ex);
         }
         catch(Exception e)
         {
             System.out.println(e.toString());
             JOptionPane.showMessageDialog(null, "Unable connect to game server, please check your internet connection and try again.", "Server Connection Failed", JOptionPane.ERROR_MESSAGE);
         }
-        finally
-        {
-            
         }
     }
 }
